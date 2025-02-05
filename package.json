@@ -1,0 +1,23 @@
+{
+  "name": "electronfilepreviewanddownload",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "cross-env NODE_ENV=development electronmon .",
+    "build": "cross-env NODE_ENV=production electronmon ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lakshmitj/ElectronFilePreviewAndDownload.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "electron": "^34.0.2"
+  },
+  "dependencies": {
+    "electronmon": "^2.0.3"
+  }
+}

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modal</title>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+   
+  </style>
+</head>
+<body>
+  <div class="modal show" id="exampleModal" style="width:100%;height:100%;display: block;" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Confirm Download</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="closeModalBtnX">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+         
+          <div class="input-group mb-3">
+            <input type="text" class="form-control" 
+            placeholder="Download Path" 
+            aria-label="Download Path" 
+            aria-describedby="basic-addon2" 
+            id="downloadPath"
+            readonly/>
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary" type="button" id="selectPath">...</button>
+            </div>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" id="closeModalBtn">Close</button>
+          <button type="button" class="btn btn-primary" id="downloadFile">Start Download</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>    
+
+    window.electron.invoke('get-parent-dom-value').then((parentValue) => {
+      console.log('Parent DOM value:', parentValue);
+      console.log('Parent DOM value - defaultPath:', parentValue.downloadPath);
+      console.log('Parent DOM value - filePath:', parentValue.filePath);
+
+      // You can now manipulate the modal DOM with the value from the parent window
+      document.getElementById('downloadPath').value = parentValue.downloadPath;
+      document.getElementById('downloadFile').dataset.filePath = parentValue.filePath;
+    });
+    // Close the modal when the close button is clicked
+    // Handle modal close
+    document.getElementById('closeModalBtn').addEventListener('click', () => {
+      //console.log('Close button clicked');  // For debugging
+      //window.electron.invoke('close-modal');
+      closeModal();
+    });
+    document.getElementById('closeModalBtnX').addEventListener('click', () => {
+      //console.log('Close button clicked');  // For debugging
+      //window.electron.invoke('close-modal');
+      closeModal();
+    });
+
+    function closeModal(){
+      console.log('Close button clicked');  // For debugging
+      window.electron.invoke('close-modal');
+    }
+
+  document.getElementById('selectPath').addEventListener('click', async () => {
+    const filePath = document.getElementById('downloadFile').dataset.filePath;
+    if(filePath) 
+    {
+        defaultPath = document.getElementById('downloadPath').value;
+        const folderPath = await window.electron.invoke('select-path', defaultPath);
+        if(folderPath){
+          document.getElementById('downloadPath').value = folderPath;  // Update the textbox
+          alert(`Selected download folder Path: ${folderPath}`);
+        }else{
+          alert('No folder selected or operation canceled.');
+        }
+    } else {
+        alert('No file selected to download.');
+    }
+  });
+
+
+document.getElementById('downloadFile').addEventListener('click', async () => {
+  const filePath = document.getElementById('downloadFile').dataset.filePath;
+  if (filePath) {
+      
+      defaultPath = document.getElementById('downloadPath').value;
+      const prams = {
+        defaultPath: defaultPath,
+        filePath: filePath
+      };
+        const savePath = await window.electron.invoke('download-file', prams);
+        if(savePath){
+          document.getElementById('downloadPath').value = savePath;  // Update the textbox
+          alert(`File saved to: ${savePath}`);
+
+        }else{
+        alert('No folder selected or operation canceled.');
+      }
+    } else {
+      alert('No file selected to download.');
+    }
+  });
+
+  </script>
+</body>
+</html>
