@@ -1,0 +1,35 @@
+name: Build Electron App (Win32) - Feature Branch
+
+on:
+  push:
+    branches:
+      - feature/Configure-Electron-Forge-for-Windows-32-bit-Build  # Replace with your actual feature branch name
+  workflow_dispatch:  # Allows manual trigger
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Package Electron App (Win32)
+        run: npm run make
+        env:
+          ELECTRON_ARCH: ia32
+          ELECTRON_PLATFORM: win32
+
+      - name: Upload Build Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: download-manager-win32
+          path: out/make/**/*.exe
