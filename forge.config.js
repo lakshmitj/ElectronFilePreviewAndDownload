@@ -9,11 +9,14 @@ module.exports = {
   makers: [
     {
       name: '@electron-forge/maker-squirrel', // Windows Installer
-      config: {},
+      config: {
+        "arch": "ia32"
+      },
     },
     {
       name: '@electron-forge/maker-zip', // MacOS/Windows ZIP
       platforms: ['darwin'],
+      
     },
     {
       name: '@electron-forge/maker-deb', // Linux DEB
