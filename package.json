@@ -1,23 +1,37 @@
 {
-  "name": "electronfilepreviewanddownload",
+  "name": "download-manager",
+  "productName": "download-manager",
   "version": "1.0.0",
-  "description": "",
+  "description": "File preview Desktop application built with Electron.js",   
   "main": "src/main.js",
   "scripts": {
-    "start": "cross-env NODE_ENV=development electronmon .",
-    "build": "cross-env NODE_ENV=production electronmon ."
+    "start": "cross-env NODE_ENV=development nodemon --exec electronmon .",
+    "start:prod": "cross-env NODE_ENV=production nodemon --exec electronmon .",
+    "build": "cross-env NODE_ENV=production electron-forge make",
+    "package": "cross-env NODE_ENV=production electron-forge package"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/lakshmitj/ElectronFilePreviewAndDownload.git"
   },
-  "author": "",
+  "author": "Lakshmi Jonnadula",
   "license": "ISC",
   "devDependencies": {
+    "@electron-forge/cli": "^7.6.1",
+    "@electron-forge/maker-deb": "^7.6.1",
+    "@electron-forge/maker-dmg": "^7.6.1",
+    "@electron-forge/maker-rpm": "^7.6.1",
+    "@electron-forge/maker-squirrel": "^7.6.1",
+    "@electron-forge/maker-zip": "^7.6.1",
+    "@electron-forge/plugin-auto-unpack-natives": "^7.6.1",
+    "@electron-forge/plugin-fuses": "^7.6.1",
+    "@electron/fuses": "^1.8.0",
     "cross-env": "^7.0.3",
-    "electron": "^34.0.2"
+    "electron": "^34.0.2",
+    "electronmon": "^2.0.3",
+    "nodemon": "^3.1.9"
   },
   "dependencies": {
-    "electronmon": "^2.0.3"
+    "electron-squirrel-startup": "^1.0.1"
   }
 }
