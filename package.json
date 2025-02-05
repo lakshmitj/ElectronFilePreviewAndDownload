@@ -33,5 +33,17 @@
   },
   "dependencies": {
     "electron-squirrel-startup": "^1.0.1"
+  },
+  "build": {
+    "appId": "com.dowloadmanager.app",
+    "productName": "download-manager",
+    "copyright": "Copyright © 2025 Lakshmi Inc.",
+    "asar": false,
+    "files": [
+      "dist/**/*",
+      "assets/**/*",
+      "preload.js",
+      "index.html"
+    ]
   }
 }

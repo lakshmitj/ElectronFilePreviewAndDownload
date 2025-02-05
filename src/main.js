@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain, dialog } = require('electron');
+const { app, BrowserWindow, ipcMain, dialog, Menu } = require('electron');
 const { pathToFileURL } = require('url');
 const path = require('path');
 const fs = require('fs');
@@ -27,10 +27,13 @@ function createMainWindow() {
 
   mainWindow.loadURL(pathToFileURL(path.join(__dirname, 'index.html')).href);
 
+  // Disable the default menu
+  Menu.setApplicationMenu(null); // This will remove the default menu bar
+
   // To Debug
-  if (isDev) {
+  // if (isDev) {
       mainWindow.webContents.openDevTools();
-  }
+  // }
 
   mainWindow.on('closed', function () {
       mainWindow = null;
@@ -51,8 +54,9 @@ function createModal() {
       // frame: false,
       transparent: true,
       webPreferences: {
-          nodeIntegration: true,
           preload: path.join(__dirname, 'preload.js'),
+          nodeIntegration: false,  // Consider using contextIsolation instead
+          contextIsolation: true
       },
   });
 
@@ -63,13 +67,17 @@ function createModal() {
         modal.show(); // Show modal when ready
     });
 
-    if (isDev) {
+    // if (isDev) {
       modal.webContents.openDevTools();
-    }
+    // }
 }
 
 //Adding Squirrel.Windows boilerplate
 if (require('electron-squirrel-startup')) app.quit();
+
+if (process.platform === 'win32') {
+  app.setAppUserModelId("com.dowloadmanager.app");
+}
 
 app.whenReady().then(() => {
     createMainWindow();
