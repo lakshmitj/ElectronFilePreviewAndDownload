@@ -46,8 +46,8 @@ function createModal() {
       parent: mainWindow,
       // modal: true,
       show: false,
-      width: isDev ? 400 : 400,
-      height: isDev ? 300 : 300,
+      width: 400,
+      height: 300,
       // frame: false,
       transparent: true,
       webPreferences: {
@@ -65,8 +65,11 @@ function createModal() {
 
     if (isDev) {
       modal.webContents.openDevTools();
-  }
+    }
 }
+
+//Adding Squirrel.Windows boilerplate
+if (require('electron-squirrel-startup')) app.quit();
 
 app.whenReady().then(() => {
     createMainWindow();
