@@ -23,13 +23,13 @@ jobs:
         run: npm install
 
       - name: Package Electron App (Win32)
-        run: npm run make
+        run: npm run build
         env:
           ELECTRON_ARCH: ia32
           ELECTRON_PLATFORM: win32
 
       - name: Upload Build Artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: download-manager-win32
           path: out/make/**/*.exe
