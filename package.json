@@ -2,7 +2,7 @@
   "name": "download-manager",
   "productName": "download-manager",
   "version": "1.0.0",
-  "description": "File preview Desktop application built with Electron.js",   
+  "description": "File preview Desktop application built with Electron.js",
   "main": "src/main.js",
   "scripts": {
     "start": "cross-env NODE_ENV=development nodemon --exec electronmon .",
@@ -32,6 +32,7 @@
     "nodemon": "^3.1.9"
   },
   "dependencies": {
+    "electron-log": "^5.3.0",
     "electron-squirrel-startup": "^1.0.1"
   },
   "build": {
