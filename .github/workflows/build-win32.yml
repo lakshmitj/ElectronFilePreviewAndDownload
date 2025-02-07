@@ -3,7 +3,7 @@ name: Build Electron App (Win32) - Feature Branch
 on:
   push:
     branches:
-      - feature/Configure-Electron-Forge-for-Windows-32-bit-Build  # Replace with your actual feature branch name
+      - main  # Replace with your actual feature branch name
   workflow_dispatch:  # Allows manual trigger
 
 jobs:
