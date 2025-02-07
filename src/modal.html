@@ -5,9 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Modal</title>
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .sub-modal {
+      z-index: 9999; /* or a value higher than other elements */
+    }
+  </style>
 </head>
 <body>
-  <div class="modal show" id="exampleModal" style="width:100%;height:100%;display: block;" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+  <div class="sub-modal modal show" id="exampleModal" style="width:100%;height:100%;display: block;" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
