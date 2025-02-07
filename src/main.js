@@ -4,6 +4,7 @@ const path = require('path');
 const fs = require('fs');
 const log = require('electron-log');
 const os = require('os');
+const { screen } = require('electron');
 
 //setup app logging
 const logDirectory = path.join(app.getPath('userData'), 'logs'); // This will use AppData for Windows
@@ -36,10 +37,16 @@ let modal;
 
 function createMainWindow() {
   if (mainWindow) return; // Prevent re-creation
+  const { width, height } = screen.getPrimaryDisplay().workAreaSize;
+
 
   mainWindow = new BrowserWindow({
-      width: isDev? 1200: 500,
-      height: isDev? 1200: 500 ,
+      width: 1280,
+      height: 800,
+      // width: Math.round(width * 0.8),  // 80% of parent width
+      // height: Math.round(height * 0.8), // 80% of parent height
+      minWidth: 1024, // Prevents the window from being too small
+      minHeight: 600,
       backgroundColor: '#ffffff',
       webPreferences: {
           preload: path.join(__dirname, 'preload.js'),
@@ -73,12 +80,16 @@ function createMainWindow() {
 function createModal() {
   if (modal) return; // Prevent re-creation
 
+  const { width, height } = mainWindow.getBounds();
+
   modal = new BrowserWindow({
       parent: mainWindow,
       modal: false,
       show: false,
-      width: isDev? 800: 400,
-      height: isDev? 600: 300,
+      // width: 400,
+      // height: 300,
+      width: Math.round(width * 0.5),  // 50% of parent width
+      height: Math.round(height * 0.5), // 50% of parent height
       // frame: false,
       transparent: false,
       webPreferences: {
