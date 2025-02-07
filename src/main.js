@@ -6,9 +6,25 @@ const log = require('electron-log');
 const os = require('os');
 
 //Configure log options
-log.transports.file.resolvePath = () => `${__dirname}/logs/main.log`;
-// log.transports.file.file = path.join(os.homedir(), 'logs', 'main.log');
+// log.transports.file.resolvePath = () => `${__dirname}/logs/main.log`;
+// // log.transports.file.file = path.join(os.homedir(), 'logs', 'main.log');
+// log.transports.console.format = '{h}:{i}:{s} {level} {text}';
+
+const logDirectory = path.join(app.getPath('userData'), 'logs'); // This will use AppData for Windows
+
+// Create logs directory if it doesn't exist
+if (!fs.existsSync(logDirectory)) {
+  fs.mkdirSync(logDirectory, { recursive: true });
+}
+
+// Configure the file transport to use the dynamic path
+log.transports.file.resolvePath = () => path.join(logDirectory, 'main.log');
+
+// Configure the console log format
 log.transports.console.format = '{h}:{i}:{s} {level} {text}';
+
+// Example log messages
+log.info('Log file path is set to:', log.transports.file.resolvePath());
 
 
 log.transports.file.level = 'info';
