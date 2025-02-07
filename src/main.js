@@ -62,9 +62,9 @@ function createMainWindow() {
   Menu.setApplicationMenu(null); // This will remove the default menu bar
 
   // To Debug
-  // if (isDev) {
-      mainWindow.webContents.openDevTools();
-  // }
+  //if (isDev) {
+    mainWindow.webContents.openDevTools();
+  //}
 
   mainWindow.on('closed', function () {
       mainWindow = null;
@@ -86,7 +86,7 @@ function createModal() {
       width: isDev? 800: 400,
       height: isDev? 600: 300,
       // frame: false,
-      transparent: true,
+      transparent: false,
       webPreferences: {
           preload: path.join(__dirname, 'preload.js'),
           nodeIntegration: false,  // Consider using contextIsolation instead
@@ -96,10 +96,31 @@ function createModal() {
 
     modal.loadURL(pathToFileURL(path.join(__dirname, 'modal.html')).href);
 
+    // modal.once('ready-to-show', () => {
+    //     console.log('ready-to-show');
+    //     log.info('ready-to-show');
+    //     modal.show(); // Show modal when ready
+    //     modal.focus(); // Ensure it gets focus
+    // });
+
     modal.once('ready-to-show', () => {
-        console.log('ready-to-show');
-        log.info('ready-to-show');
-        modal.show(); // Show modal when ready
+      console.log('ready-to-show');
+      log.info('ready-to-show');
+
+      if (modal.isVisible()) {
+          console.log('Modal is already visible.');
+          log.info('Modal is already visible.');
+      } else {
+          console.log('Showing modal...');
+          log.info('Showing modal...');
+          modal.show();  // Show modal when ready
+          modal.focus(); // Ensure it gets focus
+      }
+    });
+
+    modal.webContents.on('did-fail-load', (event, errorCode, errorDescription) => {
+      console.error('Failed to load modal content:', errorCode, errorDescription);
+      log.error(`Failed to load modal content: ${errorCode} ${errorDescription}`);
     });
 
     modal.on('closed', () => {
