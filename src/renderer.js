@@ -1,4 +1,18 @@
+
+//require() won't work in a pure browser-based renderer unless 
+// Node integration is enabled (nodeIntegration: true in webPreferences), which 
+// is not recommended for security reasons.
+// If you use Webpack, this works fine.
+//const { logMessage } = require('./log-util".js');
+
 document.getElementById('selectFile').addEventListener('click', async () => {
+  
+  const methodName = 'selectFile';
+  const logMain = `[index-renderer] ${methodName}`
+  console.log(logMain);
+
+  logMessage('info', logMain);
+
   const file = await window.electron.invoke('select-file');
   if (file) {
     document.getElementById('filePath').textContent = file.path;
@@ -22,33 +36,16 @@ document.getElementById('selectFile').addEventListener('click', async () => {
   }
 });
 
-document.getElementById('downloadFile').addEventListener('click', async () => {
-  const filePath = document.getElementById('downloadFile').dataset.filePath;
-  if (filePath) 
-  {
-    defaultPath = document.getElementById('downloadPath').value;
-    const prams = {
-      defaultPath: defaultPath,
-      filePath: filePath
-    };
-    const savePath = await window.electron.invoke('download-file', prams);
-    if(savePath) {
-      document.getElementById('downloadPath').value = savePath;  // Update the textbox
-      alert(`File saved to: ${savePath}`);
-
-    } else {
-      alert('No folder selected or operation canceled.');
-    }
-  } else {
-      alert('No file selected to download.');
-  }
-});
-
 document.getElementById('browserdownloadPath').addEventListener('click', async () => {
+  const methodName = 'browserdownloadPath';
+  const logMain = `[index-renderer] ${methodName}`
+  console.log(logMain);
+
   const filePath = document.getElementById('downloadFile').dataset.filePath;
   if(filePath) 
   {
     defaultPath = document.getElementById('downloadPath').value;
+    logMessage('info',`${logMain}: defaultPath ${defaultPath}`);
 
     window.electron.invoke('browser-download-path', defaultPath);
 

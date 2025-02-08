@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>File Previewer</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
         * {
           box-sizing: border-box;
@@ -30,30 +31,41 @@
           display: table;
           clear: both;
         }
+        .top-buffer { margin-top:20px; }
+       
         </style>
 </head>
 <body>
-    <div class="row">
+    <!-- <div class="row">
         <div class="column left">
-            <button id="selectFile">Select File</button>
+            <button id="selectFile" class="btn btn-primary">Select File</button>
         </div>
         <div class="column right">
-            <!-- <input type="text" id="downloadPath" width="800px" readonly />
-            <button id="selectPath">Select Download Location</button>   
-            <button id="browserdownloadPath">Select Download Location2</button>          
-            <button id="downloadFile">Download File</button> -->
-
             <input type="hidden" id="downloadPath" width="800px" readonly />
             <input type="hidden" id="downloadFile" />
-            <button id="browserdownloadPath">Download</button>          
-           
-
-
+            <button id="browserdownloadPath" class="btn btn-primary">Download</button> 
         </div>
+    </div> -->
+    <div class="container" style="padding-top: 10px;">
+      <div class="row">
+        <div class="col col-lg-2">
+          <button id="selectFile" class="btn btn-primary">Select File</button>
+        </div>
+        <div class="col col-lg-2">
+          <input type="hidden" id="downloadPath" width="800px" readonly />
+          <input type="hidden" id="downloadFile" />
+          <button id="browserdownloadPath" class="btn btn-primary">Download</button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col col-md-auto">
+          <p id="filePath"></p>
+          <pre id="fileContent"></pre>
+          <img id="filePreview" style="display: none; max-width: 100%; height: auto;" />
+        </div>
+      </div>
     </div>
-    <p id="filePath"></p>
-    <pre id="fileContent"></pre>
-    <img id="filePreview" style="display: none; max-width: 100%; height: auto;" />
+    <script src="log-util.js"></script>
     <script src="renderer.js"></script>
 </body>
 </html>
