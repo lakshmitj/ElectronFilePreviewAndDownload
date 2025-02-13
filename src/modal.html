@@ -5,13 +5,35 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Modal</title>
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../node_modules/@radiance-design-core/tokens/rad-variables.css"/>
+  <link rel="stylesheet" href="../node_modules/@radiance-design-software/theme/css/rad-theme.min.css"/>
   <style>
     .sub-modal {
       z-index: 9999; /* or a value higher than other elements */
     }
+
+    rad-button {
+      &::part(button) {
+       --rad-button-font-size : 16px;
+     }
+    }
+
+    #selectPath::part(button) {
+      --rad-button-radius: 0 !important;
+    }
+
+    #selectPath:hover::part(button),
+    #selectPath:focus::part(button) {
+      outline: none;
+      outline: 0;
+    }
+
   </style>
+  <script src="../node_modules/@radiance-design-software/button/web-button.js"></script>
+  <script src="../node_modules/@radiance-design-software/text-field/web-text-field.js"></script>
+  
 </head>
-<body>
+<body class="rad-theme--light">
   <div class="sub-modal modal show" id="exampleModal" style="width:100%;height:100%;display: block;" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -24,21 +46,20 @@
         <div class="modal-body">
          
           <div class="input-group mb-3">
-            <input type="text" class="form-control" 
+            <rad-text-field 
             placeholder="Download Path" 
-            aria-label="Download Path" 
-            aria-describedby="basic-addon2" 
             id="downloadPath"
-            readonly/>
+            size="35"
+            >
+            </rad-text-field>
             <div class="input-group-append">
-              <button class="btn btn-outline-secondary" type="button" id="selectPath">...</button>
+              <rad-button variant="secondary" id="selectPath">...</rad-button>
             </div>
           </div>
-
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal" id="closeModalBtn">Close</button>
-          <button type="button" class="btn btn-primary" id="downloadFile">Start Download</button>
+          <rad-button variant="secondary" size="small"  id="closeModalBtn">Close</rad-button>
+          <rad-button variant="primary" id="downloadFile">Start Download</rad-button>
         </div>
       </div>
     </div>
