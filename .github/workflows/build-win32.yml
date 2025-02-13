@@ -3,7 +3,7 @@ name: Build Electron App (Win32) - Feature Branch
 on:
   push:
     branches:
-      - main  # Replace with your actual feature branch name
+      - enable-radience-components  # Replace with your actual feature branch name
   workflow_dispatch:  # Allows manual trigger
 
 jobs:
