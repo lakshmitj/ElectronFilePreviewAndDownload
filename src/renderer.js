@@ -1,10 +1,8 @@
-
 //require() won't work in a pure browser-based renderer unless 
 // Node integration is enabled (nodeIntegration: true in webPreferences), which 
 // is not recommended for security reasons.
 // If you use Webpack, this works fine.
 //const { logMessage } = require('./log-util".js');
-
 document.getElementById('selectFile').addEventListener('click', async () => {
   
   const methodName = 'selectFile';
@@ -44,7 +42,7 @@ document.getElementById('browserdownloadPath').addEventListener('click', async (
   const filePath = document.getElementById('downloadFile').dataset.filePath;
   if(filePath) 
   {
-    defaultPath = document.getElementById('downloadPath').value;
+    const defaultPath = document.getElementById('downloadPath').value;
     logMessage('info',`${logMain}: defaultPath ${defaultPath}`);
 
     window.electron.invoke('browser-download-path', defaultPath);

@@ -1,0 +1,57 @@
+name: Reusable Electron Build (Win32)
+
+on:
+  workflow_call:
+    inputs:
+      node_version:
+        description: "Node.js version to use"
+        required: false
+        default: 18
+        type: number
+      electron_arch:
+        description: "Electron architecture"
+        required: false
+        default: "ia32"
+        type: string
+      electron_platform:
+        description: "Electron platform"
+        required: false
+        default: "win32"
+        type: string
+      artifact_name:
+        description: "Custom artifact name"
+        required: false
+        default: "download-manager-win32"
+        type: string
+    outputs:
+      artifact_name:
+        description: "Name of the uploaded artifact"
+        value: ${{ inputs.artifact_name }}
+
+jobs:
+  build:
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ inputs.node_version }}
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Package Electron App
+        run: npm run build
+        env:
+          ELECTRON_ARCH: ${{ inputs.electron_arch }}
+          ELECTRON_PLATFORM: ${{ inputs.electron_platform }}
+
+      - name: Upload Build Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ inputs.artifact_name }}
+          path: out/make/**/*.exe

@@ -14,7 +14,7 @@ if (!fs.existsSync(logDirectory)) {
 }
 
 // Configure the file transport to use the dynamic path
-log.transports.file.resolvePath = () => path.join(logDirectory, 'main.log');
+log.transports.file.file = () => path.join(logDirectory, 'main.log');
 
 // Configure the console log format
 log.transports.console.format = '{h}:{i}:{s} {level} {text}';
@@ -23,7 +23,7 @@ log.transports.file.level = 'info';
 log.transports.console.level = 'debug';
 
 // Example log messages
-log.info('Log file path is set to:', log.transports.file.resolvePath());
+log.info('Log file path is set to:', log.transports.file.file());
 
 // For Window, process.platform: win32
 // For linux, process.platform: linux
@@ -38,8 +38,7 @@ let modal;
 function createMainWindow() {
   if (mainWindow) return; // Prevent re-creation
   const { width, height } = screen.getPrimaryDisplay().workAreaSize;
-
-
+  
   mainWindow = new BrowserWindow({
       width: 1280,
       height: 800,
@@ -63,6 +62,7 @@ function createMainWindow() {
 
   // To Debug
   if (isDev) {
+    // Open the DevTools.
     mainWindow.webContents.openDevTools();
   }
 
@@ -125,6 +125,7 @@ function createModal() {
     });
 
     if (isDev) {
+      // Open the DevTools.
       modal.webContents.openDevTools();
     }
     log.info('modal created');
@@ -153,6 +154,8 @@ app.whenReady().then(() => {
       }
     });
 
+    // On macOS it's common to re-create a window in the app when the
+    // dock icon is clicked and there are no other windows open.
     app.on('activate', () => {
         if (BrowserWindow.getAllWindows().length === 0) {
             createMainWindow();
@@ -160,6 +163,9 @@ app.whenReady().then(() => {
     });
 });
 
+// Quit when all windows are closed, except on macOS. There, it's common
+// for applications and their menu bar to stay active until the user quits
+// explicitly with Cmd + Q.
 app.on('window-all-closed', () => {
   if (!isMac) {
       app.quit();

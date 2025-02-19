@@ -4,10 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>File Previewer</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="../node_modules/@radiance-design-software/theme/css/rad-theme.min.css"/>
+    <link rel="stylesheet" href="../node_modules/@radiance-design-core/tokens/rad-variables.css"/>
     <style>
+
+          /* Set variables for all modes */
+          :root {
+          /* Set the body font-size for all Radiance components */
+          --rad-font-sizes-body: 1rem;
+          /* Set the font family used for every Radiance component */
+          --rad-font-families-inter: "Inter", Arial, -apple-system, BlinkMacSystemFont, "Segoe UI",sans-serif;
+          }
+
         * {
           box-sizing: border-box;
+        }
+
+        rad-button {
+          &::part(button) {
+           --rad-button-font-size : 16px;
+         }
         }
         
         /* Create two equal columns that floats next to each other */
@@ -33,28 +50,19 @@
         }
         .top-buffer { margin-top:20px; }
        
-        </style>
+    </style>
+    <script src="../node_modules/@radiance-design-software/button/web-button.js"></script>
 </head>
-<body>
-    <!-- <div class="row">
-        <div class="column left">
-            <button id="selectFile" class="btn btn-primary">Select File</button>
-        </div>
-        <div class="column right">
-            <input type="hidden" id="downloadPath" width="800px" readonly />
-            <input type="hidden" id="downloadFile" />
-            <button id="browserdownloadPath" class="btn btn-primary">Download</button> 
-        </div>
-    </div> -->
+<body class="rad-theme--light">
     <div class="container" style="padding-top: 10px;">
       <div class="row">
         <div class="col col-lg-2">
-          <button id="selectFile" class="btn btn-primary">Select File</button>
+          <rad-button id="selectFile" variant="secondary" icon-name-before="folderOpen">Select File</rad-button>
         </div>
         <div class="col col-lg-2">
           <input type="hidden" id="downloadPath" width="800px" readonly />
           <input type="hidden" id="downloadFile" />
-          <button id="browserdownloadPath" class="btn btn-primary">Download</button>
+          <rad-button variant="primary" id="browserdownloadPath">Download</rad-button>
         </div>
       </div>
       <div class="row">

@@ -42,14 +42,14 @@ document.getElementById('selectPath').addEventListener('click', async () => {
     const filePath = document.getElementById('downloadFile').dataset.filePath;
     if(filePath) 
     {
-        defaultPath = document.getElementById('downloadPath').value;
-        logMessage(`${logMain}:defaultPath: ${defaultPath}`);
+        const defaultPath = document.getElementById('downloadPath').value;
+        logMessage('info',`${logMain}:defaultPath: ${defaultPath}`);
 
         const folderPath = await window.electron.invoke('select-path', defaultPath);
 
         if(folderPath){
             document.getElementById('downloadPath').value = folderPath;  // Update the textbox
-            logMessage(`${logMain}:defaultPath: ${folderPath}`);
+            logMessage('info',`${logMain}:defaultPath: ${folderPath}`);
 
             alert(`Selected download folder Path: ${folderPath}`);
 
@@ -69,7 +69,7 @@ document.getElementById('downloadFile').addEventListener('click', async () => {
 
     const filePath = document.getElementById('downloadFile').dataset.filePath;
     if(filePath) {
-        defaultPath = document.getElementById('downloadPath').value;
+        const defaultPath = document.getElementById('downloadPath').value;
         const params = {
             defaultPath: defaultPath,
             filePath: filePath
